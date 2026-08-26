@@ -1,0 +1,36 @@
+openapi: 3.0.0
+paths:
+  /health:
+    get:
+      operationId: HealthController_check
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - health
+  /orders/{id}:
+    get:
+      operationId: OrdersController_getOrder
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >-
+            Order detail + payment status, aggregated. A payment-service outage degrades gracefully: the order is still
+            returned with payment: "unavailable".
+      tags:
+        - orders
+info:
+  title: Order BFF API
+  description: Thin REST aggregation BFF over order-service + payment-service, partial-failure tolerant.
+  version: 0.1.0
+  contact: {}
+tags: []
+servers: []
+components:
+  schemas: {}
