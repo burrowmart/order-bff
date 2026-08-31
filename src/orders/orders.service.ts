@@ -20,8 +20,9 @@ export class OrdersService {
 
   // Fresh client per call: correlationId lives in AsyncLocalStorage and
   // changes per request. authHeaders forwards the caller's own credential —
-  // both downstream services independently verify the Cognito JWT (global
-  // guard), so a request arriving without it would 401 in a real deployment.
+  // both downstream Envoy PEP sidecars verify the Cognito JWT signature
+  // (the app guards only extract identity), so a request arriving without
+  // it would be denied in a real deployment.
   private orderClient(authHeaders: Record<string, string>) {
     return createOrderServiceClient({
       baseUrl: this.config.get<string>('orderServiceUrl')!,

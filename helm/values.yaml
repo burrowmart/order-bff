@@ -19,7 +19,7 @@ base-service:
 
   # ---------------------------------------------------------------------------
   # Application container — non-sensitive runtime config only.
-  # Secrets (COGNITO_USER_POOL_ID, COGNITO_CLIENT_ID) are sourced from AWS
+  # Secrets () are sourced from AWS
   # Secrets Manager and synced into a k8s Secret by External Secrets Operator.
   # order-bff has no datastore of its own — nothing else to inject here.
   # ---------------------------------------------------------------------------
@@ -38,7 +38,6 @@ base-service:
       # the HTTP receiver port silently drops every span.
       OTEL_SERVICE_NAME: order-bff
       OTEL_EXPORTER_OTLP_ENDPOINT: "http://otel-collector.observability.svc.cluster.local:4317"
-      COGNITO_REGION: us-east-1
 
   resources:
     requests:
@@ -68,7 +67,7 @@ base-service:
 
   opaAddress: "opa-pdp.opa-system.svc.cluster.local:9191"
 
-  # Expected keys: COGNITO_USER_POOL_ID, COGNITO_CLIENT_ID, JWT_SECRET
+  # Expected keys: JWT_SECRET
   secretsManagerPath: "/prod/order-bff"
 
   irsaRoleArn: "arn:aws:iam::ACCOUNT_ID:role/order-bff-irsa"
